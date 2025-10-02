@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "uWebSockets.js": "uNetworking/uWebSockets.js#v20.47.0"
+  }
+}

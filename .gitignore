@@ -29,3 +29,5 @@ proto/
 dist/
 
 node_modules/
+
+*beam
