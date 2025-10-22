@@ -1,0 +1,12 @@
+config:
+  target: "ws://localhost:4000/ws"
+  phases:
+    - duration: 30
+      arrivalRate: 100   # 100 client mới mỗi giây
+scenarios:
+  - engine: "ws"
+    flow:
+      - send: "hello"
+      - think: 1
+      - send: "ping"
+      - think: 1

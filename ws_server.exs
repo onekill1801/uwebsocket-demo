@@ -9,25 +9,25 @@ Mix.install([
 defmodule WsHandler do
   @behaviour :cowboy_websocket
 
-  # Khi HTTP request upgrade lên WebSocket
+  # Bước 1: upgrade từ HTTP -> WebSocket
   def init(req, _state) do
     {:cowboy_websocket, req, %{}}
   end
 
-  # Khi client kết nối thành công
+  # Bước 2: khi kết nối WebSocket khởi tạo
   def websocket_init(state) do
     IO.puts("✅ WebSocket connected")
     {:ok, state}
   end
 
-  # Khi nhận message từ client
+  # Bước 3: nhận message text từ client
   def websocket_handle({:text, msg}, state) do
     IO.puts("📩 Received: #{msg}")
     reply = "Echo: #{msg}"
     {:reply, {:text, reply}, state}
   end
 
-  # Khi client ngắt kết nối
+  # Bước 4: khi client ngắt kết nối
   def websocket_terminate(_reason, _state) do
     IO.puts("❌ Client disconnected")
     :ok
@@ -41,7 +41,8 @@ defmodule WsRouter do
   plug :dispatch
 
   get "/ws" do
-    Plug.Conn.upgrade_adapter(conn, :websocket, {WsHandler, %{}})
+    # ✅ Cú pháp đúng: {handler, arg, opts_map}
+    Plug.Conn.upgrade_adapter(conn, :websocket, {WsHandler, %{}, %{}})
   end
 
   match _ do
